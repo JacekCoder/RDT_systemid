@@ -1,0 +1,3 @@
+[submodule "feeding_mujoco"]
+	path = feeding_mujoco
+	url = https://github.com/janneyow/feeding_mujoco.git

@@ -1,0 +1,21 @@
+side: R # Left or Right
+
+wheel:
+  radius: 0.13 # the outer radius of the wheel
+
+plate:
+  name: omni_plate
+  pos: [0, 0, 0]
+  mass: 2.2423
+  diag_inertia: [0.0524193, 0.0303095, 0.0303095]
+  size: [0.11, 0.0435] # [radius, half height] of a cylinder
+
+
+roller:
+  name: omni_roller
+  n_roller: 12
+  mass: 0.1
+  diag_inertia: [0.03, 0.03, 0.03]
+  ratio: 0.5 # the ratio of the roller radius to the wheel radius
+  geom_friction: [0.3, 0.05,0.005]
+  geom_condim: 4

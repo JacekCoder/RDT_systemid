@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco>
+    <worldbody>
+        <body name="plate_body" pos="0 0 0">
+            <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="2.2423" diaginertia="0.0524193 0.0303095 0.0303095" />
+            <joint name="plate_joint" pos="0 0 0" axis="0 1 0" />
+            <geom size="0.13 0.0435" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.2 0.2 0.2 0.5" contype="0" conaffinity="0" />
+            <body name="roller_0" pos="0.090000 0 0.000000">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_0" pos="0 0 0" axis="-0.000000 0 1.000000" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 90 0" />
+            </body>
+            <body name="roller_1" pos="0.077942 0 0.045000">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_1" pos="0 0 0" axis="-0.500000 0 0.866025" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 60 0" />
+            </body>
+            <body name="roller_2" pos="0.045000 0 0.077942">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_2" pos="0 0 0" axis="-0.866025 0 0.500000" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 30 0" />
+            </body>
+            <body name="roller_3" pos="0.000000 0 0.090000">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_3" pos="0 0 0" axis="-1.000000 0 0.000000" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 0 0" />
+            </body>
+            <body name="roller_4" pos="-0.045000 0 0.077942">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_4" pos="0 0 0" axis="-0.866025 0 -0.500000" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 -30 0" />
+            </body>
+            <body name="roller_5" pos="-0.077942 0 0.045000">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_5" pos="0 0 0" axis="-0.500000 0 -0.866025" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 -60 0" />
+            </body>
+            <body name="roller_6" pos="-0.090000 0 0.000000">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_6" pos="0 0 0" axis="-0.000000 0 -1.000000" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 -90 0" />
+            </body>
+            <body name="roller_7" pos="-0.077942 0 -0.045000">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_7" pos="0 0 0" axis="0.500000 0 -0.866025" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 -120 0" />
+            </body>
+            <body name="roller_8" pos="-0.045000 0 -0.077942">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_8" pos="0 0 0" axis="0.866025 0 -0.500000" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 -150 0" />
+            </body>
+            <body name="roller_9" pos="-0.000000 0 -0.090000">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_9" pos="0 0 0" axis="1.000000 0 -0.000000" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 -180 0" />
+            </body>
+            <body name="roller_10" pos="0.045000 0 -0.077942">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_10" pos="0 0 0" axis="0.866025 0 0.500000" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 -210 0" />
+            </body>
+            <body name="roller_11" pos="0.077942 0 -0.045000">
+                <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.00020618 0.00020618 0.00021125" />
+                <joint name="roller_joint_11" pos="0 0 0" axis="0.500000 0 0.866025" />
+                <geom type="ellipsoid" size="0.07 0.047 0.047" rgba="1 1 1 1" euler="0 -240 0" />
+            </body>
+        </body>
+    </worldbody>
+</mujoco>

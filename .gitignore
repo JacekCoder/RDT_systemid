@@ -1,0 +1,12 @@
+*.pyc
+*.png
+*.DS_Store
+MUJOCO_LOG.TXT
+sysid_pipeline/**/*.csv
+sysid_pipeline/**/*.npy
+sysid_pipeline/**/*.xml
+sysid_pipeline/**/*.obj
+
+SimData/**/*.csv
+sysid_data/**/*.csv
+DRBA_pipeline/**/*.txt

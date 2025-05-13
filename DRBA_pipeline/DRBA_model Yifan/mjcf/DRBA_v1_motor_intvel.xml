@@ -1,0 +1,69 @@
+<mujoco model="DRBA_v1_motor_intvel">
+  <compiler angle="radian"/>
+   <option integrator="implicitfast" timestep="0.001" />
+  <visual>
+    <global azimuth="-120" elevation="-20"/>
+    <headlight ambient="0.3 0.3 0.3" diffuse="0.6 0.6 0.6" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+  </visual>
+
+  <asset>
+    <mesh name="mobile_base" file="../meshes/mobile_base.STL"/>
+    <mesh name="Left_motor" file="../meshes/Left_motor.STL"/>
+    <mesh name="Right_motor" file="../meshes/Right_motor.STL"/>
+    <mesh name="mobile_base2" file="../meshes/mobile_base2.STL"/>
+    <mesh name="Left_motor2" file="../meshes/Left_motor2.STL"/>
+    <mesh name="Right_motor2" file="../meshes/Right_motor2.STL"/>
+    <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2" width="100" height="100"/>
+    <material name="MatPlane" reflectance="0.0" texture="texplane" texrepeat="1 1" texuniform="true"/>
+  </asset>
+
+  <default>
+    <default class="DRBA">
+      <default class="motor">
+        <joint axis="0 1 0" damping="0.35757" frictionloss="0.53378" armature="0.009"/>
+        <intvelocity ctrlrange="-10 10" forcerange="-50 50" kp="20" kv="5.727" actrange="-3140000 3140000"/>
+      </default>
+      <default class="visual_rob">
+        <geom group="2" type="mesh" contype="0" conaffinity="0"/>
+      </default>
+      <default class="collision_rob">
+        <geom group="3" type="mesh"/>
+        <default class="rubber_wheel">
+          <geom condim="6" friction="0.8 0.02 0.01" priority="1"/>
+        </default>
+      </default>
+    </default>
+  </default> 
+
+  <actuator>
+    <!-- <motor name="Left_motor" joint = "Left_motor" class="motor"/>
+    <motor name="Right_motor" joint = "Right_motor" class="motor"/> -->
+    <intvelocity name="Left_motor" joint = "Left_motor" class="motor"/>
+    <intvelocity name="Right_motor" joint = "Right_motor" class="motor"/>
+  </actuator>
+
+  <worldbody>
+    <body name="floor" pos="0 0 -0.1601">
+      <geom name="floor" type="plane" size="100 100 0.125" material="MatPlane" condim="3"/>
+    </body>
+    <body name="mobile_base" childclass="DRBA">
+      <inertial pos="0.11688 0.021495 0.31592" quat="0.999934 -2.04321e-05 0.0114838 -0.000659424" mass="76.015" diaginertia="1.9924 1.6974 0.477811"/>
+      <geom type="mesh" rgba="0.69804 0.69804 0.69804 1" mesh="mobile_base2" class="visual_rob"/>
+      <body name="Left_motor" pos="0 0.314 0">
+        <inertial pos = "0 0 0" mass="2.351" diaginertia="0.01575 0.03 0.01575"/>
+        <!-- <inertial pos="0.00100083 -0.014702 0.00854768" quat="0.705408 0.0622935 0.031329 0.705364" mass="1.29956" diaginertia="0.052945 0.0296261 0.0287677"/> -->
+        <joint name="Left_motor" pos="0 0 0" axis="0 1 0" class="motor"/>
+        <geom type="mesh" rgba="1 1 1 1" mesh="Left_motor2" class="visual_rob"/>
+        <geom class="rubber_wheel" type="cylinder" size="0.16 0.03" pos="0 0 0" quat="0.7071067811865476 0.7071067811865475 0.0 0.0"/>
+      </body>
+      <body name="Right_motor" pos="0 -0.314 0">
+        <inertial pos = "0 0 0" mass="2.351" diaginertia="0.01575 0.03 0.01575"/>
+        <!-- <inertial pos="0.00100231 0.0145611 0.0084844" quat="0.705275 0.0320555 0.0628821 0.705411" mass="1.30355" diaginertia="0.0530033 0.0296496 0.0287877"/> -->
+        <joint name="Right_motor" pos="0 0 0" axis="0 1 0" class="motor"/>
+        <geom type="mesh" rgba="1 1 1 1" mesh="Right_motor2" class="visual_rob"/>
+        <geom class="rubber_wheel" type="cylinder" size="0.16 0.03" pos="0 0 0" quat="0.7071067811865476 0.7071067811865475 0.0 0.0"/>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

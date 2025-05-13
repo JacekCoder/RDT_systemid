@@ -1,0 +1,98 @@
+<mujoco model="minicar">
+
+    <compiler angle="radian"/>
+
+    <option timestep="0.002" integrator="implicitfast"/>
+    
+    <include file="common/skybox.xml"/>
+    <include file="common/visual.xml"/>
+
+    <include file="/Users/wangyf/Desktop/RDT_systemid_control_toolbox/model/Minicar/minicar.xml"/>
+    <include file="/Users/wangyf/Desktop/RDT_systemid_control_toolbox/model/DRBA/DRBA_v1.xml"/>
+
+
+    <equality>
+      <weld body1="interface" body2="link_mast"/>
+    </equality>
+
+    <contact>
+      <!-- exclude the contact betwwen base_link and L_omni_roller 0-11 and R_omni_roller 0-11-->
+      <exclude body1="base_link" body2="L_omni_roller0"/>
+      <exclude body1="base_link" body2="L_omni_roller1"/>
+      <exclude body1="base_link" body2="L_omni_roller2"/>
+      <exclude body1="base_link" body2="L_omni_roller3"/>
+      <exclude body1="base_link" body2="L_omni_roller4"/>
+      <exclude body1="base_link" body2="L_omni_roller5"/>
+      <exclude body1="base_link" body2="L_omni_roller6"/>
+      <exclude body1="base_link" body2="L_omni_roller7"/>
+      <exclude body1="base_link" body2="L_omni_roller8"/>
+      <exclude body1="base_link" body2="L_omni_roller9"/>
+      <exclude body1="base_link" body2="L_omni_roller10"/>
+      <exclude body1="base_link" body2="L_omni_roller11"/>
+      <exclude body1="base_link" body2="R_omni_roller0"/>
+      <exclude body1="base_link" body2="R_omni_roller1"/>
+      <exclude body1="base_link" body2="R_omni_roller2"/>
+      <exclude body1="base_link" body2="R_omni_roller3"/>
+      <exclude body1="base_link" body2="R_omni_roller4"/>
+      <exclude body1="base_link" body2="R_omni_roller5"/>
+      <exclude body1="base_link" body2="R_omni_roller6"/>
+      <exclude body1="base_link" body2="R_omni_roller7"/>
+      <exclude body1="base_link" body2="R_omni_roller8"/>
+      <exclude body1="base_link" body2="R_omni_roller9"/>
+      <exclude body1="base_link" body2="R_omni_roller10"/>
+      <exclude body1="base_link" body2="R_omni_roller11"/>
+
+      <!-- exclude the contact betwwen link_right_wheel and L_omni_roller 0-11 and R_omni_roller 0-11-->
+      <exclude body1="link_right_wheel" body2="L_omni_roller0"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller1"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller2"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller3"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller4"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller5"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller6"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller7"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller8"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller9"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller10"/>
+      <exclude body1="link_right_wheel" body2="L_omni_roller11"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller0"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller1"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller2"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller3"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller4"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller5"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller6"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller7"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller8"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller9"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller10"/>
+      <exclude body1="link_right_wheel" body2="R_omni_roller11"/>
+
+      <!-- exclude the contact betwwen link_left_wheel and L_omni_roller 0-11 and R_omni_roller 0-11-->
+      <exclude body1="link_left_wheel" body2="L_omni_roller0"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller1"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller2"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller3"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller4"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller5"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller6"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller7"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller8"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller9"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller10"/>
+      <exclude body1="link_left_wheel" body2="L_omni_roller11"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller0"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller1"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller2"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller3"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller4"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller5"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller6"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller7"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller8"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller9"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller10"/>
+      <exclude body1="link_left_wheel" body2="R_omni_roller11"/>
+    </contact>
+
+</mujoco>

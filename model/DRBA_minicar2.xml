@@ -1,0 +1,29 @@
+<mujoco model="minicar">
+
+    <compiler angle="radian"/>
+
+    <option timestep="0.001" integrator="implicitfast"/>
+   
+    <include file="common/skybox.xml"/>
+    <include file="common/visual.xml"/>
+
+    <include file="/Users/wangyf/Desktop/RDT_systemid_control_toolbox/model/Minicar/minicar.xml"/>
+    <include file="/Users/wangyf/Desktop/RDT_systemid_control_toolbox/model/DRBA/DRBA_v1_frictionless.xml"/>
+
+
+    <equality>
+      <weld body1="interface" body2="link_mast" torquescale="2"/>
+    </equality>
+
+    <contact>
+      <exclude body1="base_link" body2="L_Omniwheel"/>
+      <exclude body1="base_link" body2="R_Omniwheel"/>
+
+      <exclude body1="link_right_wheel" body2="L_Omniwheel"/>
+      <exclude body1="link_right_wheel" body2="R_Omniwheel"/>
+      <exclude body1="link_left_wheel" body2="L_Omniwheel"/>
+      <exclude body1="link_left_wheel" body2="R_Omniwheel"/>
+
+    </contact>
+
+</mujoco>

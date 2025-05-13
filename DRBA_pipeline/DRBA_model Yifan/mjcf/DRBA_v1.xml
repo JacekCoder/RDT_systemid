@@ -1,0 +1,361 @@
+<mujoco model="DRBA_v1">
+  <compiler angle="radian"/>
+
+  <visual>
+    <global azimuth="-120" elevation="-20"/>
+    <headlight ambient="0.3 0.3 0.3" diffuse="0.6 0.6 0.6" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+  </visual>
+
+  <asset>
+    <mesh name="mobile_base" file="../meshes/mobile_base.STL"/>
+    <mesh name="Left_motor" file="../meshes/Left_motor.STL"/>
+    <mesh name="Right_motor" file="../meshes/Right_motor.STL"/>
+    <mesh name="mobile_base2" file="../meshes/mobile_base2.STL"/>
+    <mesh name="Left_motor2" file="../meshes/Left_motor2.STL"/>
+    <mesh name="Right_motor2" file="../meshes/Right_motor2.STL"/>
+    <mesh name="L_LinkOmni" file="../meshes/L_LinkOmni.STL"/>
+    <mesh name="L_Omniwheel" file="../meshes/L_Omniwheel.STL"/>
+    <mesh name="R_LinkOmni" file="../meshes/R_LinkOmni.STL"/>
+    <mesh name="R_Omniwheel" file="../meshes/R_Omniwheel.STL"/>
+    <mesh name="SitToStand" file="../meshes/SitToStand.STL"/>
+    <mesh name="L_distal" file="../meshes/L_distal.STL"/>
+    <mesh name="L_fore" file="../meshes/L_fore.STL"/>
+    <mesh name="L_toInterface" file="../meshes/L_toInterface.STL"/>
+    <mesh name="R_distal" file="../meshes/R_distal.STL"/>
+    <mesh name="R_fore" file="../meshes/R_fore.STL"/>
+    <mesh name="R_toInterface" file="../meshes/R_toInterface.STL"/>
+    <mesh name="interface" file="../meshes/interface.STL"/>
+    <mesh name="L_handle" file="../meshes/L_handle.STL"/>
+    <mesh name="R_handle" file="../meshes/R_handle.STL"/>
+    <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2" width="100" height="100"/>
+    <material name="MatPlane" reflectance="0.0" texture="texplane" texrepeat="1 1" texuniform="true"/>
+  </asset>
+
+  <default>
+    <default class="DRBA">
+      <default class="motor">
+        <joint axis="0 1 0" damping="0.2"/>
+        <motor ctrlrange="-1 1" gear="32" forcerange="-1000 1000"/>
+      </default>
+      <default class="distal_arm">
+        <joint axis="0 0 1" damping="0.2" frictionloss="0.2"/>
+      </default>
+      <default class="fore_arm">
+        <joint axis="0 0 1" damping="0.2" frictionloss="0.2"/>
+      </default>
+      <default class="ToInterface">
+        <joint axis="0 0 1" damping="0.3" frictionloss="0.3"/>
+      </default>
+      <default class="visual_rob">
+        <geom group="2" type="mesh" contype="0" conaffinity="0"/>
+      </default>
+      <default class="collision_rob">
+        <geom group="3" type="mesh"/>
+        <default class="rubber_wheel">
+          <geom condim="6" friction="0.8 0.02 0.01" priority="1"/>
+        </default>
+      </default>
+      <default class="omniwheel">
+          <default class="omniplate" />
+          <default class="omniroller">
+              <geom condim="4" contype="1" conaffinity="0" friction="0.3 0.05 0.005" />
+          </default>
+      </default>
+    </default>
+  </default>
+
+ <!-- <tendon>
+   <fixed name="forward">
+     <joint joint="Left_motor" coef="0.5"/>
+     <joint joint="Right_motor" coef="0.5"/>
+   </fixed>
+   <fixed name="turn">
+     <joint joint="Left_motor" coef="-0.5"/>
+     <joint joint="Right_motor" coef="0.5"/>
+   </fixed>
+ </tendon> -->
+
+  <actuator>
+    <motor name="Left_motor" joint = "Left_motor" class="motor"/>
+    <motor name="Right_motor" joint = "Right_motor" class="motor"/>
+  </actuator>
+
+  <worldbody>
+    <body name="floor" pos="0 0 -0.1601">
+      <geom name="floor" type="plane" size="100 100 0.125" material="MatPlane" condim="3"/>
+    </body>
+    <body name="mobile_base" childclass="DRBA">
+      <joint name="base_tx" type="slide" axis="1 0 0" limited="false"/>
+      <joint name="base_ty" type="slide" axis="0 1 0" limited="false"/>
+      <joint name="base_tz" type="slide" axis="0 0 1" limited="false"/>
+      <joint name="base_rx" type="hinge" axis="1 0 0" limited="false"/>
+      <joint name="base_ry" type="hinge" axis="0 1 0" limited="false"/>
+      <joint name="base_rz" type="hinge" axis="0 0 1" limited="false"/>
+      <inertial pos="0.11688 0.021495 0.31592" quat="0.999934 -2.04321e-05 0.0114838 -0.000659424" mass="76.015" diaginertia="1.9924 1.6974 0.477811"/>
+      <geom type="mesh" rgba="0.69804 0.69804 0.69804 1" mesh="mobile_base2" class="visual_rob"/>
+      <body name="Left_motor" pos="0 0.314 0">
+        <inertial pos = "0 0 0" mass="1.5" diaginertia="0.01005 0.0192 0.01005"/>
+        <!-- <inertial pos="0.00100083 -0.014702 0.00854768" quat="0.705408 0.0622935 0.031329 0.705364" mass="1.29956" diaginertia="0.052945 0.0296261 0.0287677"/> -->
+        <joint name="Left_motor" pos="0 0 0" axis="0 1 0" class="motor"/>
+        <geom type="mesh" rgba="1 1 1 1" mesh="Left_motor2" class="visual_rob"/>
+        <geom class="rubber_wheel" type="cylinder" size="0.16 0.03" pos="0 0 0" quat="0.7071067811865476 0.7071067811865475 0.0 0.0"/>
+      </body>
+      <body name="Right_motor" pos="0 -0.314 0">
+        <inertial pos = "0 0 0" mass="1.5" diaginertia="0.01005 0.0192 0.01005"/>
+        <!-- <inertial pos="0.00100231 0.0145611 0.0084844" quat="0.705275 0.0320555 0.0628821 0.705411" mass="1.30355" diaginertia="0.0530033 0.0296496 0.0287877"/> -->
+        <joint name="Right_motor" pos="0 0 0" axis="0 1 0" class="motor"/>
+        <geom type="mesh" rgba="1 1 1 1" mesh="Right_motor2" class="visual_rob"/>
+        <geom class="rubber_wheel" type="cylinder" size="0.16 0.03" pos="0 0 0" quat="0.7071067811865476 0.7071067811865475 0.0 0.0"/>
+      </body>
+      <body name="L_LinkOmni" pos="0.2295 0.293 -0.002">
+        <inertial pos="0.269692 0.0195669 -0.00970581" quat="-0.155609 0.690984 -0.156214 0.688421" mass="5.75383" diaginertia="0.0335686 0.0331811 0.00231502"/>
+        <!-- Set as fixed joint first -->
+        <!-- <joint name="L_LinkOmni" pos="0 0 0" axis="0 0 1"/> -->
+        <geom type="mesh" rgba="0.698039 0.698039 0.698039 1" mesh="L_LinkOmni" class="visual_rob"/>
+        <body name="L_Omniwheel" pos="0.51 0.019111 -0.028">
+          <!-- <inertial pos="0 0.0257732 0" quat="0.707107 0 0 0.707107" mass="1" diaginertia="8.30176e-11 4.25864e-11 4.25752e-11"/>
+          <joint name="L_Omniwheel" pos="0 0 0" axis="0 1 0"/>
+          <geom type="mesh" rgba="1 1 1 1" mesh="L_Omniwheel" class="visual_rob"/>
+          <geom type="cylinder" size="0.13 0.021" pos="0 0 0" euler="-1.5708 0 0" rgba="1 1 1 1" class="visual_rob"/> -->
+          <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="2.2423" diaginertia="0.0524193 0.0303095 0.0303095" />
+          <joint name="L_omni_plate" pos="0 0 0" axis="0 1 0" />
+          <geom type="mesh" rgba="1 1 1 1" mesh="L_Omniwheel" class="visual_rob"/>
+          <geom size="0.11 0.0435" quat="0.707107 0.707107 0 0" type="cylinder" rgba="1 1 1 1" contype="0" conaffinity="0" />
+          <!-- Omniwheel rollers -->
+          <body name="L_omni_roller0" pos="0.06064582562299426 0.0 0.016249999999999997">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller0" pos="0 0 0" axis="0.0 0.0 -1.0" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller1" pos="0.04439582562299427 0.0 0.04439582562299425">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller1" pos="0 0 0" axis="0.49999999999999994 0.0 -0.8660254037844387" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller2" pos="0.016250000000000007 0.0 0.060645825622994254">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller2" pos="0 0 0" axis="0.8660254037844386 0.0 -0.5000000000000001" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller3" pos="-0.01624999999999999 0.0 0.06064582562299426">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller3" pos="0 0 0" axis="1.0 0.0 -6.123233995736766e-17" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller4" pos="-0.044395825622994246 0.0 0.04439582562299427">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller4" pos="0 0 0" axis="0.8660254037844387 0.0 0.49999999999999983" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller5" pos="-0.060645825622994254 0.0 0.016250000000000014">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller5" pos="0 0 0" axis="0.5000000000000003 0.0 0.8660254037844385" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller6" pos="-0.06064582562299427 0.0 -0.01624999999999999">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller6" pos="0 0 0" axis="1.2246467991473532e-16 0.0 1.0" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller7" pos="-0.04439582562299428 0.0 -0.04439582562299424">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller7" pos="0 0 0" axis="-0.4999999999999998 0.0 0.8660254037844388" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller8" pos="-0.01625000000000002 0.0 -0.060645825622994254">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller8" pos="0 0 0" axis="-0.8660254037844384 0.0 0.5000000000000004" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller9" pos="0.016249999999999973 0.0 -0.06064582562299427">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller9" pos="0 0 0" axis="-1.0 0.0 1.8369701987210297e-16" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller10" pos="0.044395825622994226 0.0 -0.04439582562299428">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller10" pos="0 0 0" axis="-0.866025403784439 0.0 -0.49999999999999933" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="L_omni_roller11" pos="0.060645825622994254 0.0 -0.01625000000000002">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="L_omni_roller11" pos="0 0 0" axis="-0.5000000000000004 0.0 -0.8660254037844384" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+        </body>
+      </body>
+      <body name="R_LinkOmni" pos="0.2295 -0.293 -0.002">
+        <inertial pos="0.270866 0.000235418 -0.0122944" quat="-0.00871755 0.709739 -0.00718324 0.704374" mass="7.4387" diaginertia="0.0381169 0.0377329 0.00314281"/>
+        <!-- Set as fixed joint first -->
+        <!-- <joint name="R_LinkOmni" pos="0 0 0" axis="0 0 1"/> -->
+        <geom type="mesh" rgba="0.698039 0.698039 0.698039 1" mesh="R_LinkOmni" class="visual_rob"/>
+        <body name="R_Omniwheel" pos="0.51 -0.019111 -0.028">
+          <!-- <inertial pos="0 -0.0257732 0" quat="0.707107 0 0 0.707107" mass="1" diaginertia="8.27217e-11 4.24185e-11 4.24185e-11"/>
+          <joint name="R_Omniwheel" pos="0 0 0" axis="0 -1 0"/>
+          <geom type="mesh" rgba="1 1 1 1" mesh="R_Omniwheel" class="visual_rob"/>
+          <geom type="cylinder" size="0.13 0.021" pos="0 0 0" euler="-1.5708 0 0" class="visual_rob"/> -->
+
+          <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="2.2423" diaginertia="0.0524193 0.0303095 0.0303095" />
+          <joint name="R_omni_plate" pos="0 0 0" axis="0 1 0" />
+          <geom type="mesh" rgba="1 1 1 1" mesh="R_Omniwheel" class="visual_rob"/>
+          <geom size="0.11 0.0435" quat="0.707107 0.707107 0 0" type="cylinder" rgba="0.2 0.2 0.2 0.5" contype="0" conaffinity="0" />
+          <!-- Omniwheel rollers -->
+          <body name="R_omni_roller0" pos="0.06064582562299426 0.0 0.016249999999999997">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller0" pos="0 0 0" axis="0.0 0.0 -1.0" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller1" pos="0.04439582562299427 0.0 0.04439582562299425">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller1" pos="0 0 0" axis="0.49999999999999994 0.0 -0.8660254037844387" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller2" pos="0.016250000000000007 0.0 0.060645825622994254">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller2" pos="0 0 0" axis="0.8660254037844386 0.0 -0.5000000000000001" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller3" pos="-0.01624999999999999 0.0 0.06064582562299426">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller3" pos="0 0 0" axis="1.0 0.0 -6.123233995736766e-17" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller4" pos="-0.044395825622994246 0.0 0.04439582562299427">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller4" pos="0 0 0" axis="0.8660254037844387 0.0 0.49999999999999983" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller5" pos="-0.060645825622994254 0.0 0.016250000000000014">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller5" pos="0 0 0" axis="0.5000000000000003 0.0 0.8660254037844385" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller6" pos="-0.06064582562299427 0.0 -0.01624999999999999">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller6" pos="0 0 0" axis="1.2246467991473532e-16 0.0 1.0" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller7" pos="-0.04439582562299428 0.0 -0.04439582562299424">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller7" pos="0 0 0" axis="-0.4999999999999998 0.0 0.8660254037844388" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller8" pos="-0.01625000000000002 0.0 -0.060645825622994254">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller8" pos="0 0 0" axis="-0.8660254037844384 0.0 0.5000000000000004" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller9" pos="0.016249999999999973 0.0 -0.06064582562299427">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller9" pos="0 0 0" axis="-1.0 0.0 1.8369701987210297e-16" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller10" pos="0.044395825622994226 0.0 -0.04439582562299428">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller10" pos="0 0 0" axis="-0.866025403784439 0.0 -0.49999999999999933" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+          <body name="R_omni_roller11" pos="0.060645825622994254 0.0 -0.01625000000000002">
+              <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.1" diaginertia="0.03 0.03 0.03" />
+              <joint name="R_omni_roller11" pos="0 0 0" axis="-0.5000000000000004 0.0 -0.8660254037844384" />
+              <geom type="sphere" size="0.065" class="omniroller" rgba="0.2 0.2 0.2 1" />
+          </body>
+        </body>
+      </body>
+      <body name="SitToStand" pos="0.1525 0 0.85592">
+        <inertial pos="0.0124466 0.00409037 -0.113997" quat="0.999948 -0.000545667 -0.0102224 -1.39797e-05" mass="17.8756" diaginertia="0.137745 0.108967 0.064378"/>
+        <!-- Set as fixed joint first -->
+        <!-- <joint name="SitToStand" pos="0 0 0" axis="0 0 1" type="slide"/> -->
+        <geom type="mesh" rgba="0.698039 0.698039 0.698039 1" mesh="SitToStand" class="visual_rob"/>
+        <!-- <body name="L_distal" pos="-0.001 0.149 -0.0797">
+          <inertial pos="0.0111115 0.126595 0.00217991" quat="0.521384 0.47766 -0.521384 0.47766" mass="7.20006" diaginertia="0.00939901 0.00555303 0.00485103"/>
+          <joint name="L_distal" pos="0 0 0" axis="0 0 1" class="distal_arm"/>
+          <geom type="mesh" rgba="0.647059 0.619608 0.588235 1" mesh="L_distal" class="visual_rob"/>
+          <body name="L_fore" pos="0.021853 0.24904 0">
+            <inertial pos="0.0995842 -0.0336233 0.00671173" quat="0.189614 0.674565 -0.185716 0.688853" mass="7.52382" diaginertia="0.021006 0.0179939 0.00764288"/>
+            <joint name="L_fore" pos="0 0 0" axis="0 0 1" class="fore_arm"/>
+            <geom type="mesh" rgba="0.6 0.6 0.6 1" mesh="L_fore" class="visual_rob"/>
+            <body name="L_toInterface" pos="0.21572 -0.15054 0.011">
+              <inertial pos="0.0130295 -0.0134398 -0.00377592" quat="0.687562 0.592604 -0.408848 -0.0944513" mass="0.561042" diaginertia="0.000443084 0.000355866 0.000288039"/>
+              <joint name="L_toInterface" pos="0 0 0" axis="0 0 1" class="ToInterface"/>
+              <geom type="mesh" rgba="0.866667 0.866667 0.890196 1" mesh="L_toInterface" class="visual_rob"/>
+            </body>
+          </body>
+        </body> -->
+        <body name="L_distal" pos="-0.001 0.149 -0.0797">
+          <inertial pos="0.00251892 0.127057 0.00217991" quat="0.504914 0.495038 -0.504914 0.495038" mass="7.20006" diaginertia="0.00939901 0.00555303 0.00485103"/>
+          <joint name="L_distal" pos="0 0 0" axis="0 0 1" class="distal_arm"/>
+          <geom type="mesh" rgba="0.647059 0.619608 0.588235 1" mesh="L_distal" class="visual_rob"/>
+          <body name="L_fore" pos="0.00494955 0.249951 0">
+            <inertial pos="0.0994416 -0.0340428 0.00671173" quat="0.191065 0.674172 -0.187138 0.688452" mass="7.52382" diaginertia="0.021006 0.0179939 0.00764288"/>
+            <joint name="L_fore" pos="0 0 0" axis="0 0 1" class="fore_arm"/>
+            <geom type="mesh" rgba="0.6 0.6 0.6 1" mesh="L_fore" class="visual_rob"/>
+            <body name="L_toInterface" pos="0.215084 -0.151451 0.011">
+              <inertial pos="0.0130295 -0.0134398 -0.00377592" quat="0.687562 0.592604 -0.408848 -0.0944513" mass="0.561042" diaginertia="0.000443084 0.000355866 0.000288039"/>
+              <joint name="L_toInterface" pos="0 0 0" axis="0 0 1" class="ToInterface"/>
+              <geom type="mesh" rgba="0.866667 0.866667 0.890196 1" mesh="L_toInterface"/>
+            </body>
+          </body>
+        </body>
+        <!-- <body name="R_distal" pos="-0.001 -0.149 -0.0797">
+          <inertial pos="0.0111219 -0.126487 0.00216323" quat="0.477742 0.521308 -0.477742 0.521308" mass="7.20347" diaginertia="0.00939914 0.00555315 0.00485108"/>
+          <joint name="R_distal" pos="0 0 0" axis="0 0 -1" class="distal_arm"/>
+          <geom type="mesh" rgba="0.647059 0.619608 0.588235 1" mesh="R_distal" class="visual_rob"/>
+          <body name="R_fore" pos="0.021853 -0.24904 0">
+            <inertial pos="0.0995742 0.0335933 0.00670127" quat="-0.189614 0.674564 0.185716 0.688853" mass="7.52934" diaginertia="0.021006 0.0179943 0.00764335"/>
+            <joint name="R_fore" pos="0 0 0" axis="0 0 -1" class="fore_arm"/>
+            <geom type="mesh" rgba="0.776471 0.756863 0.737255 1" mesh="R_fore" class="visual_rob"/>
+            <body name="R_toInterface" pos="0.21572 0.15054 0.011">
+              <inertial pos="0.0130295 0.0134398 -0.00377114" quat="0.591766 0.687625 0.0925118 0.410397" mass="0.561042" diaginertia="0.000443708 0.000355244 0.000288036"/>
+              <joint name="R_toInterface" pos="0 0 0" axis="0 0 -1" class="ToInterface"/>
+              <geom type="mesh" rgba="0.866667 0.866667 0.890196 1" mesh="R_toInterface" class="visual_rob"/>
+            </body>
+          </body>
+        </body> -->
+        <body name="R_distal" pos="-0.001 -0.149 -0.0797">
+          <inertial pos="0.00253462 -0.126949 0.00216323" quat="0.495116 0.504837 -0.495116 0.504837" mass="7.20347" diaginertia="0.00939914 0.00555315 0.00485108"/>
+          <joint name="R_distal" pos="0 0 0" axis="0 0 -1" class="distal_arm"/>
+          <geom type="mesh" rgba="0.647059 0.619608 0.588235 1" mesh="R_distal" class="visual_rob"/>
+          <body name="R_fore" pos="0.00494955 -0.249951 0">
+            <inertial pos="0.0994317 0.0340127 0.00670127" quat="-0.191065 0.674171 0.187138 0.688452" mass="7.52934" diaginertia="0.021006 0.0179943 0.00764335"/>
+            <joint name="R_fore" pos="0 0 0" axis="0 0 -1" class="fore_arm"/>
+            <geom type="mesh" rgba="0.776471 0.756863 0.737255 1" mesh="R_fore" class="visual_rob"/>
+            <body name="R_toInterface" pos="0.215084 0.151451 0.011">
+              <inertial pos="0.0130295 0.0134398 -0.00377114" quat="0.591766 0.687625 0.0925118 0.410397" mass="0.561042" diaginertia="0.000443708 0.000355244 0.000288036"/>
+              <joint name="R_toInterface" pos="0 0 0" axis="0 0 -1" class="ToInterface"/>
+              <geom type="mesh" rgba="0.866667 0.866667 0.890196 1" mesh="R_toInterface" class="visual_rob"/>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+    <!-- Interface -->
+    <body name="interface" pos="-0.01754 0 0">
+      <joint name="interface_tx" type="slide" axis="1 0 0" limited="false"/>
+      <joint name="interface_ty" type="slide" axis="0 1 0" limited="false"/>
+      <joint name="interface_tz" type="slide" axis="0 0 1" limited="false"/>
+      <joint name="interface_rx" type="hinge" axis="1 0 0" limited="false"/>
+      <joint name="interface_ry" type="hinge" axis="0 1 0" limited="false"/>
+      <joint name="interface_rz" type="hinge" axis="0 0 1" limited="false"/>
+      <!-- <inertial pos="0.43206 2.1793e-06 0.94217" quat="0.704633 0.704631 -0.0591028 0.0591098" mass="33.787" diaginertia="0.50785 0.39796 0.12113"/> -->
+      <inertial pos="0.42917 1.3869e-05 0.80412" quat="0.706871 0.706872 -0.0182344 0.018275" mass="4.3133" diaginertia="0.075379 0.069746 0.0058555"/>
+      <geom type="mesh" rgba="0.86667 0.86667 0.8902 1" mesh="interface" class="visual_rob"/>
+      <body name="L_handle" pos="0.43797 0.25342 0.78622">
+        <inertial pos="0.1026 -0.015165 0.0024098" quat="0.498254 0.485394 0.489071 0.526255" mass="3.5057" diaginertia="0.00834714 0.00760884 0.00349582"/>
+        <!-- <joint name="L_handle" pos="0 0 0" axis="0 -1 0" type="slide"/> -->
+        <geom type="mesh" rgba="0.75294 0.75294 0.75294 1" mesh="L_handle" class="visual_rob"/>
+      </body>
+      <body name="R_handle" pos="0.43797 -0.25342 0.78622">
+        <inertial pos="0.10188 0.015045 0.0022443" quat="0.526246 0.489079 0.485375 0.498274" mass="3.5366" diaginertia="0.00834974 0.00760975 0.00349841"/>
+        <!-- <joint name="R_handle" pos="0 0 0" axis="0 -1 0" type="slide"/> -->
+        <geom type="mesh" rgba="0.65098 0.61961 0.58824 1" mesh="R_handle" class="visual_rob"/>
+      </body>
+    </body>
+  </worldbody>
+  <!-- Welding equality for closed-loop kinematics -->
+  <equality>
+    <weld body1="L_toInterface" body2="interface" torquescale="1000"/>
+    <weld body1="R_toInterface" body2="interface" torquescale="1000"/>
+  </equality>
+</mujoco>
